@@ -34,6 +34,10 @@ variable "vm_web_image" {
   default = "ubuntu-2004-lts"
 }
 
+variable "vm_web_name" {
+  type = string
+  default = "netology-develop-platform-web"
+}
 variable "vm_web_platform" {
   type = string
   default = "standard-v3"
