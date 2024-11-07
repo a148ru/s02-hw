@@ -71,3 +71,63 @@ variable "vm_web_core_fract" {
 ## Задание 5
 
 ![alt text](image-7.png)
+
+![alt text](image-8.png)
+
+![alt text](image-9.png)
+
+## Задание 6
+
+```rb
+variable vm_param {
+  type = map(any)
+  default = {
+    web = ({
+      cores = 2,
+      memory = 1,
+      core_fract = 20
+    }),
+    db = ({
+      cores = 2,
+      memory = 2,
+      core_fract = 20
+    })
+  }
+}
+###ssh vars
+
+variable "vms_ssh_root_key" {
+  type        = string
+  # default     = ""
+  description = "ssh-keygen -t ed25519"
+}
+
+variable "serial_enable" {
+  type = number
+  default = 1
+  description = "Serial port, default = enable (1)"
+}
+
+variable "user_name" {
+  type = string
+  default = "ubuntu"
+}
+```
+
+```rb
+locals {
+    web_name = "netology-${var.env}-${var.platform.3}-${var.role[0]}"
+    db_name = "netology-${var.env}-${var.platform.3}-${var.role[1]}"
+    vms_ssh_root_key = {
+        serial_port = ({
+            stat = var.serial_enable
+        }),
+        ssh = ({
+            key = "${var.user_name}:${var.vms_ssh_root_key}"
+        })
+        }
+}
+```
+![alt text](image-10.png)
+
+## Задание 7

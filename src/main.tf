@@ -2,6 +2,9 @@ resource "yandex_vpc_network" "develop" {
   name = var.vpc_name
 }
 
+################ vm web ######################
+
+
 resource "yandex_vpc_subnet" "develop" {
   name           = var.vpc_name
   zone           = var.default_zone.a
@@ -17,9 +20,9 @@ resource "yandex_compute_instance" "platform" {
   name        = local.web_name
   platform_id = var.platform.3
   resources {
-    cores         = var.vm_web_cores
-    memory        = var.vm_web_memory
-    core_fraction = var.vm_web_core_fract
+    cores         = var.vm_param.web.cores
+    memory        = var.vm_param.web.memory
+    core_fraction = var.vm_param.web.core_fract
   }
   boot_disk {
     initialize_params {
@@ -35,14 +38,14 @@ resource "yandex_compute_instance" "platform" {
   }
 
   metadata = {
-    serial-port-enable = 1
-    ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
+    serial-port-enable = local.vms_ssh_root_key.serial_port.stat
+    ssh-keys           = local.vms_ssh_root_key.ssh.key
   }
 
 }
 
 
-####################
+#################### vm db ##########################
 
 
 resource "yandex_vpc_subnet" "db-develop" {
@@ -59,11 +62,11 @@ data "yandex_compute_image" "db-ubuntu" {
 resource "yandex_compute_instance" "db-platform" {
   name        = local.db_name
   platform_id = var.platform.3
-  zone = var.db_default_zone
+  zone = var.default_zone.b
   resources {
-    cores         = var.vm_db_cores
-    memory        = var.vm_db_memory
-    core_fraction = var.vm_db_core_fract
+    cores         = var.vm_param.db.cores
+    memory        = var.vm_param.db.memory
+    core_fraction = var.vm_param.db.core_fract
   }
   boot_disk {
     initialize_params {
@@ -79,8 +82,8 @@ resource "yandex_compute_instance" "db-platform" {
   }
 
   metadata = {
-    serial-port-enable = 1
-    ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
+    serial-port-enable = local.vms_ssh_root_key.serial_port.stat
+    ssh-keys           = local.vms_ssh_root_key.ssh.key
   }
 
 }

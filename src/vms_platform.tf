@@ -4,25 +4,25 @@ variable "db_subnet_name" {
     default = "db-develop"
 }
 
-variable "db_default_zone" {
-  type        = string
-  default     = "ru-central1-b"
-  description = "https://cloud.yandex.ru/docs/overview/concepts/geo-scope"
-}
+#variable "db_default_zone" {
+#  type        = string
+#  default     = "ru-central1-b"
+#  description = "https://cloud.yandex.ru/docs/overview/concepts/geo-scope"
+#}
 
-variable "vm_db_cores" {
-  type = number
-  default = 2
-}
-variable "vm_db_memory" {
-  type = number
-  default = 2
-}
-variable "vm_db_core_fract" {
-  type = number
-  default = 20
-} 
-
+#variable "vm_db_cores" {
+#  type = number
+#  default = 2
+#}
+#variable "vm_db_memory" {
+#  type = number
+#  default = 2
+#}
+#variable "vm_db_core_fract" {
+#  type = number
+#  default = 20
+#} 
+#
 ###ssh vars
 #
 #variable "vms_ssh_root_key" {

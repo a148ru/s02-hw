@@ -38,7 +38,10 @@ variable "vpc_name" {
 
 variable "image" {
   type = map(string)
-  default = {web="ubuntu-2004-lts", db="ubuntu-2204-lts"}
+  default = {
+    web="ubuntu-2004-lts",
+    db="ubuntu-2204-lts"
+    }
 }
 
 variable "env" {
@@ -48,7 +51,10 @@ variable "env" {
 
 variable "role" {
   type = list(string)
-  default = ["web", "db"]
+  default = [
+    "web",
+    "db"
+    ]
 }
 
 variable "platform" {
@@ -60,23 +66,53 @@ variable "platform" {
   }
 }
 
-variable "vm_web_cores" {
-  type = number
-  default = 2
+
+variable vm_param {
+  type = map(any)
+  default = {
+    web = ({
+      cores = 2,
+      memory = 1,
+      core_fract = 20
+    }),
+    db = ({
+      cores = 2,
+      memory = 2,
+      core_fract = 20
+    })
+  }
 }
-variable "vm_web_memory" {
-  type = number
-  default = 1
-}
-variable "vm_web_core_fract" {
-  type = number
-  default = 20
-} 
+
+
+#variable "vm_web_cores" {
+#  type = number
+#  default = 2
+#}
+#variable "vm_web_memory" {
+#  type = number
+#  default = 1
+#}
+#variable "vm_web_core_fract" {
+#  type = number
+#  default = 20
+#} 
 
 ###ssh vars
 
 variable "vms_ssh_root_key" {
   type        = string
-  default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMk9vrkXYEC0Sm0DBtMXuSTWSH771egCT/P35D2ll6f a148ru@polaris134"
+  # default     = ""
   description = "ssh-keygen -t ed25519"
 }
+
+variable "serial_enable" {
+  type = number
+  default = 1
+  description = "Serial port, default = enable (1)"
+}
+
+variable "user_name" {
+  type = string
+  default = "ubuntu"
+}
+
