@@ -12,13 +12,21 @@ variable "folder_id" {
 }
 
 variable "default_zone" {
-  type        = string
-  default     = "ru-central1-a"
+  type        = map(string)
+  default     = {
+    a="ru-central1-a",
+    b="ru-central1-b",
+    c="ru-central1-c"
+    }
   description = "https://cloud.yandex.ru/docs/overview/concepts/geo-scope"
 }
 variable "default_cidr" {
-  type        = list(string)
-  default     = ["10.0.1.0/24"]
+  type        = map(list(string))
+  default     = {
+    a=["10.0.1.0/24"],
+    b=["10.0.2.0/24"],
+    c=["10.0.3.0/24"]
+  }
   description = "https://cloud.yandex.ru/docs/vpc/operations/subnet-create"
 }
 
@@ -28,20 +36,30 @@ variable "vpc_name" {
   description = "VPC network & subnet name"
 }
 
-
-variable "vm_web_image" {
-  type = string
-  default = "ubuntu-2004-lts"
+variable "image" {
+  type = map(string)
+  default = {web="ubuntu-2004-lts", db="ubuntu-2204-lts"}
 }
 
-variable "vm_web_name" {
+variable "env" {
   type = string
-  default = "netology-develop-platform-web"
+  default = "develop"
 }
-variable "vm_web_platform" {
-  type = string
-  default = "standard-v3"
+
+variable "role" {
+  type = list(string)
+  default = ["web", "db"]
 }
+
+variable "platform" {
+  type = map(string)
+  default = {
+    1 = "standard-v1"
+    2 = "standard-v2"
+    3 = "standard-v3"
+  }
+}
+
 variable "vm_web_cores" {
   type = number
   default = 2
